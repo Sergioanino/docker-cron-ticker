@@ -2036,7 +2036,7 @@ Nous avons utilise la documentation pour tout le long de cette exemple : [buildx
 
 ---------
 
-# Section 6 - Multi-Stage Build
+# Section 6 - Multi-Stage Build.
 
 Un Dockerfile avec une construction multi-étapes (multistage build) permet de créer une image Docker plus légère et plus sécurisée en utilisant plusieurs étapes de construction (stages) pour générer l'image finale.
 
