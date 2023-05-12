@@ -2054,4 +2054,4 @@ Juste le clone de l'application.
 
 ## 67 - Multi-state Build
 
-1. 
+1. Start Section 6.
