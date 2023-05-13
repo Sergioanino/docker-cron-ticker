@@ -1,30 +1,27 @@
-# /app /usr /lib
-# FROM node:19.2-alpine3.16
-FROM --platform=linux/amd64 node:19.2-alpine3.16
+#- Dependence de développement.
+FROM node:19.2-alpine3.16 as deps
 # FROM --platform=$BUILDPLATFORM node:19.2-alpine3.16
-
-# cd app
-WORKDIR /app
-
-# Dest /app
+WORKDIR /app 
 COPY package.json ./
-
-# COPY ../app.js ../package.json ./ # Sergio file docker.
-
-# Install dependencies
 RUN npm install
 
-# Dest /app
+#- Testing & Build app.
+FROM node:19.2-alpine3.16 as builder
+WORKDIR /app
+COPY --from=deps /app/node_modules ./node_modules
 COPY . .
-
-# Testing :
 RUN npm run test
 
-# delete unless directory to production :
-RUN rm -rf tests && rm -rf node_modules
-
-# DEP to production :
+#- Dependence de production.
+FROM node:19.2-alpine3.16 as prod-deps
+WORKDIR /app
+COPY package.json ./
 RUN npm install --prod
 
-# Commande to run image
+#- Exécuter l'application
+FROM node:19.2-alpine3.16 as runner
+WORKDIR /app
+COPY --from=prod-deps /app/node_modules ./node_modules
+COPY app.js ./
+COPY tasks/ ./tasks
 CMD [ "node", "app.js" ]

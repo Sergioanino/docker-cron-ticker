@@ -2052,6 +2052,98 @@ En résumé, la construction multi-étapes permet de générer des images Docker
 
 Juste le clone de l'application.
 
-## 67 - Multi-state Build
+## 67 à 68- Multi-state Build
 
-1. Start Section 6.
+Optimisation de la création de l'image dans la section 5 : Optimiser avec le **Multi-State build**
+---
+
+1. Changer le dockerfile pour qu'il soit créer en plusieurs layout séparément :
+   ```
+   #- Dependence de développement.
+   FROM node:19.2-alpine3.16 as deps
+   # FROM --platform=$BUILDPLATFORM node:19.2-alpine3.16
+   WORKDIR /app 
+   COPY package.json ./
+   RUN npm install
+   
+   #- Testing & Build app.
+   FROM node:19.2-alpine3.16 as builder
+   WORKDIR /app
+   COPY --from=deps /app/node_modules ./node_modules
+   COPY . .
+   RUN npm run test
+   
+   #- Dependence de production.
+   FROM node:19.2-alpine3.16 as prod-deps
+   WORKDIR /app
+   COPY package.json ./
+   RUN npm install --prod
+   
+   #- Exécuter l'application
+   FROM node:19.2-alpine3.16 as runner
+   WORKDIR /app
+   COPY --from=prod-deps /app/node_modules ./node_modules
+   COPY app.js ./
+   COPY tasks/ ./tasks
+   CMD [ "node", "app.js" ]
+   ```
+Si nous voulons savoir plus sur le différence d'un [COPY](https://docs.docker.com/engine/reference/builder/#copy) et d'un [ADD](https://phoenixnap.com/kb/docker-add-vs-copy).
+
+   Création de l'image : 
+   ```
+   docker build -t sergioanino/cron_ticker:perro .
+   docker build -t sergioanino/cron_ticker:latest .
+   ```
+   Faire courir l'image :
+   ```
+   docker container run sergioanino/cron_ticker    
+   ```
+# 69 - Télécharger l'image créer dans docker hub avec le latest & perro
+
+1. Commande du push à hub.docker.com :
+   ```
+   docker push sergioanino/cron_ticker:perro
+   docker push sergioanino/cron_ticker
+   ```
+   Vérifier sur le site de docker si l'image est bien là !
+
+# 70 - Buildx avec d'autre architecture avec la Dockerfile optimiser
+
+1. Créer un nouveau buildx par default du nom : intela
+   ```
+   docker buildx create --name intela --driver docker-container --bootstrap
+   ```
+2. Utiliser le nouveau buildx intela :
+   ```
+   docker buildx ls
+   docker buildx use intela
+   docker buildx ls
+   ```
+L'intela doit avoir l' * astérisque !
+
+3. Créer le buildx avec tous les architecture voulu :
+   ```
+   docker buildx build `
+   --platform linux/amd64,linux/arm64,linux/arm/v7 `
+   -t sergioanino/cron_ticker:gato --push .
+   ```
+   et la même commande pour le latest :
+   ```
+   docker buildx build `
+   --platform linux/amd64,linux/arm64,linux/arm/v7 `
+   -t sergioanino/cron_ticker --push .
+   ```
+
+4. Voir notre image buildx avec le inspecteur :
+   ```
+   docker buildx imagetools inspect sergioanino/cron_ticker:gato
+   ``` 
+-------
+
+SECTION 6 :  DEUXIÈME PROJET VOIR GITHUB.
+
+# 73 - Commencement projet 2 - Section 6 - Projet nest.
+
+Nous allons utiliser yarn dans ce projet installer sur notre pc : [installateur](https://classic.yarnpkg.com/lang/en/docs/install/#mac-stable)
+
+1. 
