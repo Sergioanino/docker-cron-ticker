@@ -6,3 +6,6 @@ Dockerfile
 .git
 .dockerignore
 .gitignore
+
+README.md
+Install.md
