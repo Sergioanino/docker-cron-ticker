@@ -1,3 +1,7 @@
+#. BUILDX
+# docker buildx build --platform linux/amd64,linux/arm64,linux/arm/v7 \
+#    -t sergioanino/cron-ticker:latest --push .
+
 #- Dependence de développement.
 FROM node:19.2-alpine3.16 as deps
 # FROM --platform=$BUILDPLATFORM node:19.2-alpine3.16
