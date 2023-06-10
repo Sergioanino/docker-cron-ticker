@@ -1531,7 +1531,7 @@ docker compose up
 docker compose -f docker\docker-compose.yml up -d
 ```
 
-3. Essayer de ce connecter à Tablesplus avec mongoDB.
+3. Essayer de ce connecter à TablePlus avec mongoDB.
 
 ```
 mongodb://localhost:27017
@@ -1590,7 +1590,7 @@ docker compose up -d
 docker compose -f docker\docker-compose.yml up -d
 ```
 
-5. se connecter à tablesplus sur mongoDB
+5. Se connecter à TablePlus sur MongoDB
 
 ```
 mongodb://sergioanino:123456789@localhost:27017
@@ -1645,7 +1645,7 @@ docker compose -f docker\docker-compose.yml up -d
 3. Se connecter au localhost de mongo express.
 
 ```
-localhsot:8081
+localhost:8081
 ```
 
 4. Essayer de se connecter à mongo express sur TablePlus
