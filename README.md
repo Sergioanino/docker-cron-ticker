@@ -2503,11 +2503,11 @@ En résumé, la construction multi-étapes permet de générer des images Docker
 
 ## 66 - Continue le projet suite : clone le projet de la section 5 ou du vidéo : 62.
 
-Juste le clone de l'application.
+Juste le clone de l'application de [github](https://github.com/Sergioanino/docker-cron-ticker/tree/main) branch s5.
 
 ## 67 à 68- Multi-state Build
 
-## Optimisation de la création de l'image dans la section 5 : Optimiser avec le **Multi-State build**
+### Optimisation de la création de l'image dans la section 5 : Optimiser avec le **Multi-State build**
 
 1. Changer le dockerfile pour qu'il soit créer en plusieurs layout séparément :
 
@@ -2605,6 +2605,7 @@ Juste le clone de l'application.
 ---
 
 SECTION 6 : DEUXIÈME PROJET VOIR GITHUB.
+---
 
 - Lien : [docker-teslo-shop](https://github.com/Sergioanino/docker-teslo-shop).
 - Utiliser la branch main pour commencer le projet.
