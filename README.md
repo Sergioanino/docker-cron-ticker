@@ -1778,6 +1778,48 @@ En résumé, l'utilisation d'un '**Dockerfile**' peut vous aider à créer et à
 
 ### 48 - Cron-Ticker : Créer un application simple avec node.js.
 
+1. Si node n'est pas install sur votre pc 1er chose à faire
+
+```
+node -v
+```
+
+2. Initialiser node
+
+```
+npm init
+```
+
+- Nous allons utiliser une package de node du nom : [Node cron](https://www.npmjs.com/package/node-cron).
+
+```
+npm i node-cron
+```
+
+3. Créer un fichier qui sera notre application : [app.js](app.js)
+
+```
+const cron = require('node-cron');
+const { syncDB } = require('./tasks/sync-db');
+
+
+console.log("Commencement de l'application");
+
+cron.schedule('1-59/5 * * * * *', syncDB);
+```
+
+- Lancer une application :
+
+```
+node app
+```
+
+4. Arrêter l'application
+
+```
+Ctrl + C
+```
+
 ### 49 - **DockerFile** - les premiers pas.
 
 - Commencement du Dockerfile :
@@ -1839,7 +1881,7 @@ Il y a plusieurs raisons pour lesquelles vous pourriez vouloir reconstruire une 
 En somme, la reconstruction d'une image Docker à l'aide d'un fichier Dockerfile permet de mettre à jour et de modifier facilement une application ou un service en créant une nouvelle image basée sur la configuration et les dépendances les plus récentes
 ```
 
-Vous avons fait des changement dans notre Dockerfile du 49 à celui-ci :
+1. Vous avons fait des changement dans notre Dockerfile du 49 à celui-ci :
 
 ```
 # /app /usr /lib
@@ -1861,7 +1903,7 @@ COPY app.js ./
 CMD [ "node", "app.js" ]
 ```
 
-1. Nous avons fait la 1er fois : et fait le changement seulement dans le **Dockerfile.**
+2. Nous avons fait la 1er fois : et fait le changement seulement dans le **Dockerfile.**
 
    ```
    docker build --tag cron_ticker .
@@ -1869,7 +1911,7 @@ CMD [ "node", "app.js" ]
 
    et voir la construction de l'image.
 
-2. La 2e fois la même commande
+3. La 2e fois la même commande
 
 ```
 docker build --tag cron_ticker .
@@ -1932,7 +1974,7 @@ cron_ticker                             1.0.0           000000000004   20 minute
 cron_ticker                             latest          000000000004   20 minutes ago   173MB
 ```
 
-## Renommer le nom d'une image
+#### **Renommer le nom d'une image**
 
 Documentation :
 
@@ -1964,7 +2006,7 @@ cron_ticker                             1.0.0           000000000004   32 minute
 cron_ticker                             bufalo          000000000004   32 minutes ago   173MB
 ```
 
-## Nous pouvons voir que la nouveau latest à un id différent !
+#### **Nous pouvons voir que la nouveau latest à un id différent !**
 
 Si nous savons que nous devons maintenir la version de cette application est et important de lui changer sont nom latest pour un tag :
 
@@ -1998,9 +2040,11 @@ cron_ticker                             bufalo          000000000004   37 minute
 1. Se connecter à hub.docker.com.
 2. créer un repository - public.
 3. Renombre l'image latest pour celle de docker hub.
-   ```
-   docker image tag cron_tricker sergioanino/cron_ticker
-   ```
+
+```
+docker image tag cron_tricker sergioanino/cron_ticker
+```
+
 4. S'authentifier sur hub.docker avec la commande sur le terminal pour être capable de faire de push de notre image au cloud :
 
    ```
@@ -2328,7 +2372,7 @@ cron_ticker                             bufalo          000000000004   37 minute
 
 ### 60 - Forcer à un système opérative de ce construir avec un système d’exploitation différent : mac, windows, linux et etc..
 
-1. Ajout du platform sur le dockerfile - choix du build pour les types de plateforme :
+1. Ajout du platform sur le dockerfile - choix du build forcer pour les types de plateforme :
 
    ```
    # /app /usr /lib
@@ -2336,6 +2380,12 @@ cron_ticker                             bufalo          000000000004   37 minute
    ```
 
    Le seule changement pour spécifier la plateforme !
+
+   **_Créer le build avant le push_**
+
+   ```
+   docker build -t sergioanino/cron_ticker .
+   ```
 
 2. faire le push dans docker hub et voir le tag de la architecture de l'image :
    ```
@@ -2453,11 +2503,11 @@ En résumé, la construction multi-étapes permet de générer des images Docker
 
 ## 66 - Continue le projet suite : clone le projet de la section 5 ou du vidéo : 62.
 
-Juste le clone de l'application.
+Juste le clone de l'application de [github](https://github.com/Sergioanino/docker-cron-ticker/tree/main) branch s5.
 
 ## 67 à 68- Multi-state Build
 
-## Optimisation de la création de l'image dans la section 5 : Optimiser avec le **Multi-State build**
+### Optimisation de la création de l'image dans la section 5 : Optimiser avec le **Multi-State build**
 
 1. Changer le dockerfile pour qu'il soit créer en plusieurs layout séparément :
 
@@ -2555,6 +2605,7 @@ Juste le clone de l'application.
 ---
 
 SECTION 6 : DEUXIÈME PROJET VOIR GITHUB.
+---
 
 - Lien : [docker-teslo-shop](https://github.com/Sergioanino/docker-teslo-shop).
 - Utiliser la branch main pour commencer le projet.
